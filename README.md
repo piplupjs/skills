@@ -40,6 +40,21 @@ Core rule: a blank line marks a conceptual boundary, not a decoration. Covers:
 
 See `skills/code-spacing/SKILL.md` for the full skill.
 
+### `coding-principles`
+
+Applies core software-engineering principles (DRY, SOLID, YAGNI, KISS, and
+related design heuristics) whenever writing, reviewing, refactoring, or
+reasoning about code. Governs how code should be structured (not what it should
+do), so it applies to any coding task regardless of language or framework.
+
+Priority order when principles conflict: correctness > clarity/simplicity
+(KISS, YAGNI) > non-repetition (DRY) > extensibility (SOLID, OCP). Includes a
+concrete application workflow for writing new code and reviewing/refactoring
+existing code, with guidance on surfacing tradeoffs explicitly rather than
+picking silently when principles conflict.
+
+See `skills/coding-principles/SKILL.md` for the full skill.
+
 ## License
 
 MIT
