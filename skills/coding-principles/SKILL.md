@@ -1,6 +1,16 @@
 ---
 name: coding-principles
-description: Software design principles (DRY, SOLID, YAGNI, KISS) for writing, reviewing, refactoring, or designing code. Use for any coding task regardless of language — features, bug fixes, refactors, code review, or architecture discussions. Apply even when the user doesn't say "clean code" or "best practices".
+description: Guides code structure with DRY, SOLID, YAGNI, KISS and related heuristics. Use when writing, reviewing, refactoring, or designing code, or when the user says "clean code", "best practices", "tech debt", "over-engineering", "refactor", or mentions DRY, SOLID, YAGNI, KISS.
+when_to_use: |
+  - Writing, reviewing, refactoring, or designing code in any language
+  - User mentions DRY, SOLID, YAGNI, KISS, "clean code", "best practices", "tech debt", or "over-engineering"
+  - User asks to refactor, review architecture, improve structure, or handle duplication/abstraction tradeoffs
+  - User says code feels "messy", "coupled", "hard to extend", or asks "is this the right abstraction?"
+  - Do NOT use for: trivial one-off scripts where current simplicity is sufficient, or purely behavioral questions with no structural concern
+license: MIT
+metadata:
+  author: piplupjs
+  version: "1.0.0"
 ---
 
 # Coding Principles
@@ -11,6 +21,16 @@ Principles conflict — DRY/SOLID push toward abstraction, YAGNI/KISS push back.
 
 **Priority:** correctness > clarity/simplicity (KISS, YAGNI) > non-repetition (DRY) > extensibility (SOLID). A working, readable, slightly repetitive solution beats broken or unreadable "elegance."
 
+## Workflow
+
+**Writing new code:**
+1. Solve the current requirement first (YAGNI).
+2. Small units, one job, clear names, minimal nesting (KISS, SRP).
+3. Don't extract shared abstractions preemptively — wait for real *knowledge* duplication (rule of three).
+4. Depend on abstractions only with a reason (multiple impls, need to mock) — not by default (DIP).
+
+**Reviewing / refactoring** — name the principle, show the smell, propose a fix (see table below).
+
 ## YAGNI — You Aren't Gonna Need It
 
 Don't build for hypothetical requirements. Solve what's needed now in an extendable way — not the extension itself.
@@ -19,6 +39,14 @@ Don't build for hypothetical requirements. Solve what's needed now in an extenda
 - No DB/cache/queue "in case we scale" without concrete need.
 - "We'll probably add X later" → note the assumption, don't pre-build X.
 - Smell: `strategy`/`mode` param with one caller and one value.
+
+```ts
+// bad — speculative abstraction for one case
+class Notifier { send(msg: string, strategy: "email" | "sms" = "email") { ... } }
+
+// good — concrete until a second strategy appears
+class EmailNotifier { send(msg: string) { ... } }
+```
 
 ## KISS — Keep It Simple
 
@@ -36,6 +64,16 @@ One authoritative representation per piece of knowledge — not per text match.
 - **Rule of three:** tolerate 1–2 duplications; extract on the 3rd when the pattern is stable.
 - Extracting too early creates a leaky abstraction harder to change than the duplication.
 - Applies to logic *and* data (constants, schemas) — e.g. one validation rule, checked in client/API/DB.
+
+```ts
+// bad — same business rule in three places
+function validateEmail(a: string) { return /^[^\s@]+@[^\s@]+$/.test(a); }
+function validateInvite(b: string) { return /^[^\s@]+@[^\s@]+$/.test(b); }
+
+// good — single source of truth
+const EMAIL_RE = /^[^\s@]+@[^\s@]+$/;
+function isEmail(v: string) { return EMAIL_RE.test(v); }
+```
 
 ## SOLID
 
@@ -60,15 +98,7 @@ At module/class/function boundaries — how responsibilities are split, not a ma
 | Command-Query Separation | A function does an action *or* answers a question, not both (`getUser()` shouldn't mutate). |
 | Explicit over Implicit | Explicit params/types/errors > hidden globals, coercion, silent fallbacks. |
 
-## Applying
-
-**Writing new code:**
-1. Solve the current requirement first (YAGNI).
-2. Small units, one job, clear names, minimal nesting (KISS, SRP).
-3. Don't extract shared abstractions preemptively — wait for real *knowledge* duplication (rule of three).
-4. Depend on abstractions only with a reason (multiple impls, need to mock) — not by default (DIP).
-
-**Reviewing / refactoring** — name the principle, show the smell, propose a fix:
+## Review checklist
 
 | Smell | Fix |
 |---|---|
