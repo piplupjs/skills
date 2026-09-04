@@ -1,6 +1,6 @@
 ---
 name: coding-principles
-description: Apply core software engineering principles — DRY, SOLID, YAGNI, KISS, and related design heuristics — whenever writing, reviewing, refactoring, or reasoning about code. Use this skill for any coding task: new features, bug fixes, refactors, code review, or architecture/design discussions, regardless of language or framework. It governs how code should be structured (not what it should do), so it applies even when the user doesn't mention "clean code," "best practices," or these principles by name.
+description: Apply core software-engineering principles (DRY, SOLID, YAGNI, KISS) when writing, reviewing, refactoring, or designing code. Use for any coding task regardless of language — new features, bug fixes, refactors, code review, or architecture/design discussions. Governs how code should be structured (not what it should do), so it applies even when the user doesn't explicitly mention "clean code" or "best practices."
 ---
 
 # Coding Principles

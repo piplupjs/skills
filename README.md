@@ -7,6 +7,7 @@ coding agents (Claude Code, Cursor, Codex, OpenCode, and 25+ others).
 
 ```bash
 npx skills add piplupjs/skills --skill code-spacing
+npx skills add piplupjs/skills --skill coding-principles
 ```
 
 Add `-g` to install globally instead of per-project, or `-a <agent>` to
