@@ -9,6 +9,8 @@ coding agents (Claude Code, Cursor, Codex, OpenCode, and 25+ others).
 npx skills add piplupjs/skills --skill code-spacing
 npx skills add piplupjs/skills --skill coding-principles
 npx skills add piplupjs/skills --skill write-react-code
+npx skills add piplupjs/skills --skill react-project-structure
+npx skills add piplupjs/skills --skill tanstack-start-project-structure
 ```
 
 Add `-g` to install globally instead of per-project, or `-a <agent>` to
@@ -67,6 +69,34 @@ Writes React components and hooks in one fixed, scannable shape. Covers:
 - repeated markup represented as data and rendered with `map`
 
 See `skills/write-react-code/SKILL.md` for the index and `skills/write-react-code/rules/` for one file per rule.
+
+### `react-project-structure`
+
+Organizes a React app's source, whatever the framework or router (Next.js,
+React Router, TanStack Start, Vite SPA). Covers:
+
+- top-level folders (`components/`, `features/`, `lib/`, `hooks/`,
+  `providers/`, `styles/`, `config/`, `generated/`) and thin route modules
+- feature slices bounded by backend domain, grouped by page area (`list/`,
+  `details/`, `profile/`, `create/`, one folder per tab), split by role folder
+- kebab-case names, one entity prefix per feature, role suffixes (`.view`,
+  `.form`, `.dialog`, `.schema`, `.service`, …)
+- views vs forms, and loading a detail record once and sharing it by context
+
+See `skills/react-project-structure/SKILL.md` for the index and `skills/react-project-structure/rules/` for one file per rule.
+
+### `tanstack-start-project-structure`
+
+The TanStack Start layer on top of `react-project-structure`. Covers:
+
+- the file route tree: pathless layouts, optional params, thin file routes
+- detail pages as a shell route plus one route per tab
+- loaders that prefetch query options, with loading and error views wired on
+  the route
+- one home each for the router, `src/start.ts`, client/server config, and the
+  generated route tree
+
+See `skills/tanstack-start-project-structure/SKILL.md` for the index and `skills/tanstack-start-project-structure/rules/` for one file per rule.
 
 ## License
 
