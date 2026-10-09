@@ -2,7 +2,7 @@
 name: write-react-code
 description: Writes React components and hooks with a fixed body order under padded section headers, stable callback refs, and repeated markup rendered from data with map. Use when writing, refactoring, or reviewing React components or hooks, or when the user says "clean up this component", "this hook is messy", "copy-pasted JSX", "duplicated markup", or "ref is null in my effect".
 when_to_use: |
-  - Any time Claude writes or edits a React component or hook (.tsx/.jsx), even if the user never mentions structure
+  - Writing or editing any React component or hook (.tsx/.jsx), even if the user never mentions structure
   - User asks to review or refactor React code: "clean up this component", "this hook is messy", "hard to find things in this file"
   - JSX repeats the same structure several times with only text, icons, or links changing
   - A callback ref flickers to null, or an effect that reads a ref sees it detached
