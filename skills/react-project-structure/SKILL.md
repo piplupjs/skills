@@ -10,7 +10,7 @@ when_to_use: |
 license: MIT
 metadata:
   author: piplupjs
-  version: "1.0.0"
+  version: "1.0.1"
 ---
 
 # React Project Structure
@@ -54,7 +54,7 @@ Where code lives in a React app, whatever the framework. The framework decides t
 
 - `naming-kebab-case`: kebab-case files and folders; hooks are `use-*.ts`
 - `naming-role-suffixes`: `.view`, `.loading`, `.error`, `.form`, `.dialog`, `.columns`, `.schema`, `.service`, `.context`; only views in `views/`
-- `naming-entity-prefix`: One entity prefix per feature, matching its URL segment
+- `naming-entity-prefix`: One entity prefix (the backend resource name) for every role-suffixed file in a feature
 
 ### 4. Ownership (MEDIUM)
 
