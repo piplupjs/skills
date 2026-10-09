@@ -66,7 +66,7 @@ Writes React components and hooks in one fixed, scannable shape. Covers:
 - stable (`useCallback`) callback refs when an effect reads the ref
 - repeated markup represented as data and rendered with `map`
 
-See `skills/write-react-code/SKILL.md` for the full skill.
+See `skills/write-react-code/SKILL.md` for the index and `skills/write-react-code/rules/` for one file per rule.
 
 ## License
 

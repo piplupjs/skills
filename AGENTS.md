@@ -17,6 +17,8 @@ This repo is `npx skills`-compatible, published via `skills.sh` (`piplupjs/skill
 - Boundaries: explicit `Do NOT use for` in `when_to_use` + body
 - Keep focused: one domain per skill, <5000 chars body, imperative voice
 
+**Multi-file rules (Vercel `react-best-practices` layout):** a skill made of independent rules (e.g. `write-react-code`) keeps `SKILL.md` as the index (workflow, priority table, one-line quick reference, how to use) and puts each rule in `rules/<prefix>-<name>.md` with frontmatter (`title`, `impact`, `impactDescription`, `tags`) and Incorrect/Correct examples. `rules/_sections.md` defines sections, prefixes, and impact; `rules/_template.md` is the starting point for new rules. No compiled `AGENTS.md` inside the skill (no build step to keep it in sync).
+
 **Validation:** `name` matches folder, description under limit, YAML `---` delimiters correct, file is `SKILL.md`. Check with `skills-ref validate` if available.
 
 **README:** Install section must list `npx skills add piplupjs/skills --skill <name>` for each skill + `--list` hint.
