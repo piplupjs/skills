@@ -40,7 +40,7 @@ Core rule: a blank line marks a conceptual boundary, not a decoration. Covers:
 - deferring to an existing formatter (Prettier, Black, gofmt, rustfmt) when
   one is configured
 
-See `skills/code-spacing/SKILL.md` for the full skill.
+See `skills/code-spacing/SKILL.md` for the index and `skills/code-spacing/rules/` for one file per rule.
 
 ### `coding-principles`
 
@@ -55,7 +55,7 @@ concrete application workflow for writing new code and reviewing/refactoring
 existing code, with guidance on surfacing tradeoffs explicitly rather than
 picking silently when principles conflict.
 
-See `skills/coding-principles/SKILL.md` for the full skill.
+See `skills/coding-principles/SKILL.md` for the index and `skills/coding-principles/rules/` for one file per rule.
 
 ### `write-react-code`
 
