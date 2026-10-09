@@ -10,7 +10,7 @@ when_to_use: |
 license: MIT
 metadata:
   author: piplupjs
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Coding Principles
@@ -29,86 +29,68 @@ Principles conflict — DRY/SOLID push toward abstraction, YAGNI/KISS push back.
 3. Don't extract shared abstractions preemptively — wait for real *knowledge* duplication (rule of three).
 4. Depend on abstractions only with a reason (multiple impls, need to mock) — not by default (DIP).
 
-**Reviewing / refactoring** — name the principle, show the smell, propose a fix (see table below).
+**Reviewing / refactoring** — name the principle, show the smell, propose a fix (see review checklist below).
 
-## YAGNI — You Aren't Gonna Need It
+## Rule Categories by Priority
 
-Don't build for hypothetical requirements. Solve what's needed now in an extendable way — not the extension itself.
+| Priority | Category | Impact | Prefix |
+|----------|----------|--------|--------|
+| 1 | Simplicity | HIGH | `simplicity-` |
+| 2 | Duplication | MEDIUM | `dry-` |
+| 3 | SOLID | LOW-MEDIUM | `solid-` |
+| 4 | Design Heuristics | LOW-MEDIUM | `design-` |
 
-- No config options, plugin systems, abstract bases, or generic params for one use case.
-- No DB/cache/queue "in case we scale" without concrete need.
-- "We'll probably add X later" → note the assumption, don't pre-build X.
-- Smell: `strategy`/`mode` param with one caller and one value.
+## Quick Reference
 
-```ts
-// bad — speculative abstraction for one case
-class Notifier { send(msg: string, strategy: "email" | "sms" = "email") { ... } }
+### 1. Simplicity (HIGH)
 
-// good — concrete until a second strategy appears
-class EmailNotifier { send(msg: string) { ... } }
-```
+- `simplicity-yagni`: Don't build for hypothetical requirements
+- `simplicity-kiss`: Straightforward > clever; optimize for the next reader
 
-## KISS — Keep It Simple
+### 2. Duplication (MEDIUM)
 
-Straightforward > clever. Optimize for the next reader.
+- `dry-knowledge-not-text`: One authoritative representation per piece of knowledge, not per text match
+- `dry-rule-of-three`: Tolerate 1–2 duplications; extract on the 3rd when the pattern is stable
 
-- Plain loop > dense chained one-liner (unless idiomatic and clear).
-- Three duplicated lines twice > poorly-named helper that obscures intent.
-- Names, structure, and flow should convey *what* without comments (comments explain *why*).
+### 3. SOLID (LOW-MEDIUM)
 
-## DRY — Don't Repeat Yourself
+- `solid-single-responsibility`: One reason to change
+- `solid-open-closed`: Extend without editing tested code
+- `solid-liskov`: Subtype usable anywhere its base is expected
+- `solid-interface-segregation`: Small, focused interfaces over one fat one
+- `solid-dependency-inversion`: Depend on abstractions for slow, external, or swappable things
 
-One authoritative representation per piece of knowledge — not per text match.
+### 4. Design Heuristics (LOW-MEDIUM)
 
-- **Knowledge, not text.** Two validations with the same regex today but independent reasons ≠ DRY violation.
-- **Rule of three:** tolerate 1–2 duplications; extract on the 3rd when the pattern is stable.
-- Extracting too early creates a leaky abstraction harder to change than the duplication.
-- Applies to logic *and* data (constants, schemas) — e.g. one validation rule, checked in client/API/DB.
-
-```ts
-// bad — same business rule in three places
-function validateEmail(a: string) { return /^[^\s@]+@[^\s@]+$/.test(a); }
-function validateInvite(b: string) { return /^[^\s@]+@[^\s@]+$/.test(b); }
-
-// good — single source of truth
-const EMAIL_RE = /^[^\s@]+@[^\s@]+$/;
-function isEmail(v: string) { return EMAIL_RE.test(v); }
-```
-
-## SOLID
-
-At module/class/function boundaries — how responsibilities are split, not a mandate for factories/DI everywhere.
-
-| Principle | Rule | Don't over-apply |
-|---|---|---|
-| **S** Single Responsibility | One reason to change; "and" in the description → consider splitting. | A 5-line function doesn't need three layers. |
-| **O** Open/Closed | Extend without editing tested code — via composition/interfaces/config over growing `if`/`switch` chains. | One variant today → simple conditional is fine (YAGNI). |
-| **L** Liskov Substitution | Subtype usable anywhere its base is expected; no narrowed inputs, widened exceptions, or broken invariants. | `NotImplementedError` on inherited method → hierarchy is wrong. |
-| **I** Interface Segregation | Small, focused interfaces over one fat one. | Don't fragment a genuinely cohesive interface. |
-| **D** Dependency Inversion | High-level logic depends on abstractions (injected DB/HTTP/FS clients), not concretions — for things that are slow, external, or swappable. | One impl, not mocked in tests → interface is YAGNI. |
-
-## Heuristics
-
-| Heuristic | Guideline |
-|---|---|
-| Separation of Concerns | Business logic, data access, presentation, I/O in distinct layers. |
-| Composition over Inheritance | Combine small pieces; inherit only for stable "is-a" + shared behavior. |
-| Law of Demeter | Talk to immediate collaborators only — avoid `a.getB().getC().doThing()` chains. |
-| Fail Fast | Validate early, raise clearly — don't let bad state propagate. |
-| Command-Query Separation | A function does an action *or* answers a question, not both (`getUser()` shouldn't mutate). |
-| Explicit over Implicit | Explicit params/types/errors > hidden globals, coercion, silent fallbacks. |
+- `design-separation-of-concerns`: Business logic, data access, presentation, I/O in distinct layers
+- `design-composition-over-inheritance`: Combine small pieces; inherit only for stable "is-a"
+- `design-law-of-demeter`: Talk to immediate collaborators only
+- `design-fail-fast`: Validate early, raise clearly
+- `design-command-query-separation`: An action *or* a question, not both
+- `design-explicit-over-implicit`: Explicit params/types/errors over hidden globals and silent fallbacks
 
 ## Review checklist
 
-| Smell | Fix |
-|---|---|
-| Same business rule copy-pasted 3+ places | DRY → extract shared function |
-| Class/function doing unrelated things | SRP → split along seams |
-| Growing `switch`/`if-elif` per new type | OCP → polymorphism or lookup table |
-| `a.getB().getC().doThing()` chains | Demeter → expose behavior, not internals |
-| Unused flags, generic params with one caller, abstract class with one subclass | YAGNI → simplify/inline |
-| Clever one-liner slower to parse than a loop | KISS → plain loop |
+| Smell | Fix | Rule |
+|---|---|---|
+| Same business rule copy-pasted 3+ places | DRY → extract shared function | `dry-rule-of-three` |
+| Class/function doing unrelated things | SRP → split along seams | `solid-single-responsibility` |
+| Growing `switch`/`if-elif` per new type | OCP → polymorphism or lookup table | `solid-open-closed` |
+| `a.getB().getC().doThing()` chains | Demeter → expose behavior, not internals | `design-law-of-demeter` |
+| Unused flags, generic params with one caller, abstract class with one subclass | YAGNI → simplify/inline | `simplicity-yagni` |
+| Clever one-liner slower to parse than a loop | KISS → plain loop | `simplicity-kiss` |
 
 **When principles conflict**, state it: *"This adds an interface for DIP, but there's one impl and no test mocking it — lean YAGNI, keep concrete until a second use appears."*
 
 Don't be dogmatic — a junior over-applies SOLID/DRY into indirection; a senior knows when three duplicated lines is the right call.
+
+## How to Use
+
+Read individual rule files for the full rule and examples:
+
+```
+rules/simplicity-yagni.md
+rules/solid-open-closed.md
+```
+
+Section metadata lives in `rules/_sections.md`; new rules start from `rules/_template.md`.
