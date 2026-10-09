@@ -8,6 +8,7 @@ coding agents (Claude Code, Cursor, Codex, OpenCode, and 25+ others).
 ```bash
 npx skills add piplupjs/skills --skill code-spacing
 npx skills add piplupjs/skills --skill coding-principles
+npx skills add piplupjs/skills --skill write-react-code
 ```
 
 Add `-g` to install globally instead of per-project, or `-a <agent>` to
@@ -55,6 +56,17 @@ existing code, with guidance on surfacing tradeoffs explicitly rather than
 picking silently when principles conflict.
 
 See `skills/coding-principles/SKILL.md` for the full skill.
+
+### `write-react-code`
+
+Writes React components and hooks in one fixed, scannable shape. Covers:
+
+- body order (State → Compute → Services → Compute → Form → Callbacks → Table
+  → Effects) with padded section headers
+- stable (`useCallback`) callback refs when an effect reads the ref
+- repeated markup represented as data and rendered with `map`
+
+See `skills/write-react-code/SKILL.md` for the full skill.
 
 ## License
 
