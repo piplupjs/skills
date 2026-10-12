@@ -2,7 +2,7 @@
 
 ## Skills — Vercel + skills.sh (agentskills.io) compliance
 
-This repo is `npx skills`-compatible, published via `skills.sh` (`piplupjs/skills`). Skills: `code-spacing`, `coding-principles`, `write-react-code`, `react-project-structure`, `tanstack-start-project-structure`, `choose-ui-design`.
+This repo is `npx skills`-compatible, published via `skills.sh` (`piplupjs/skills`). Skills: `code-spacing`, `coding-principles`, `write-react-code`, `react-project-structure`, `tanstack-start-project-structure`, `choose-ui-design`, `claude-delegate-and-budget`.
 
 **Frontmatter (required + recommended):**
 - `name`: kebab-case, must match folder name exactly

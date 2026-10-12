@@ -12,6 +12,7 @@ npx skills add piplupjs/skills --skill write-react-code
 npx skills add piplupjs/skills --skill react-project-structure
 npx skills add piplupjs/skills --skill tanstack-start-project-structure
 npx skills add piplupjs/skills --skill choose-ui-design
+npx skills add piplupjs/skills --skill claude-delegate-and-budget
 ```
 
 Add `-g` to install globally instead of per-project, or `-a <agent>` to
@@ -114,6 +115,28 @@ the pick to the project. Covers:
 - mapping everything to project tokens and a motion budget
 
 See `skills/choose-ui-design/SKILL.md` for the index and `skills/choose-ui-design/rules/` for one file per rule.
+
+### `claude-delegate-and-budget`
+
+Decides how an agent spends its context, tokens, and wall-clock: whether a
+piece of work stays inline or goes to a subagent, which model tier the
+subagent gets, and what effort (thinking) level each piece runs at. Covers:
+
+- inline by default; delegate only for parallel independent chunks, to keep
+  bulk reading out of the main context, or for an unanchored review
+- briefing a subagent like a peer (goal, what is ruled out, pointers, scope,
+  return shape), launching in the background, and never redoing or
+  predicting delegated work
+- Haiku for mechanical and verifiable work, Sonnet for bounded coding, Opus
+  for judgment, Fable on request; cost judged per completed task; cheap
+  fan-out with strong synthesis
+- effort scaled to the cost of being wrong, low for narrow briefs, raised
+  before irreversible steps and after repeated failures, and a one-line
+  flag when the session setting does not fit
+- a Claude Code mapping (`model` / `effort` on the Agent call, agent-file
+  frontmatter, `ultrathink`, `/model`, `/effort`)
+
+See `skills/claude-delegate-and-budget/SKILL.md` for the index and `skills/claude-delegate-and-budget/rules/` for one file per rule.
 
 ## License
 
