@@ -11,6 +11,7 @@ npx skills add piplupjs/skills --skill coding-principles
 npx skills add piplupjs/skills --skill write-react-code
 npx skills add piplupjs/skills --skill react-project-structure
 npx skills add piplupjs/skills --skill tanstack-start-project-structure
+npx skills add piplupjs/skills --skill choose-ui-design
 ```
 
 Add `-g` to install globally instead of per-project, or `-a <agent>` to
@@ -97,6 +98,22 @@ The TanStack Start layer on top of `react-project-structure`. Covers:
   generated route tree
 
 See `skills/tanstack-start-project-structure/SKILL.md` for the index and `skills/tanstack-start-project-structure/rules/` for one file per rule.
+
+### `choose-ui-design`
+
+Chooses where each layer of a UI comes from before building it, then adapts
+the pick to the project. Covers:
+
+- reading the stack and classifying the surface (marketing vs product)
+- finding references first: flows on Mobbin, product details on Kargul's
+  swipe file
+- one base system (shadcn/ui by default), with AlignUI Pro and Pro blocks
+  rebuilt on it from their designs; sections from shadcnblocks, one
+  signature effect from Aceternity UI or React Bits, bento layouts from
+  bentogrids.com, backgrounds from grainient.supply
+- mapping everything to project tokens and a motion budget
+
+See `skills/choose-ui-design/SKILL.md` for the index and `skills/choose-ui-design/rules/` for one file per rule.
 
 ## License
 
